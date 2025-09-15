@@ -12,11 +12,11 @@ public class Heroes {
     }
 
     private void initializeHeroes() {
-        heroes.add(new Knight());
-        heroes.add(new Mage());
-        heroes.add(new Archer());
-        heroes.add(new Rook());
-        heroes.add(new Assasin());
+        heroes.add(new Debugger());
+        heroes.add(new Hacker());
+        heroes.add(new Tester());
+        heroes.add(new Architect());
+        heroes.add(new PenTester());
         heroes.add(new Cleric());
     }
 

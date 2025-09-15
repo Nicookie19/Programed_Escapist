@@ -298,7 +298,7 @@ public abstract class Hero implements Serializable {
     }
 
     public void receiveDamage(int dmg) {
-        if (this instanceof Knight) {
+        if (this instanceof Debugger) {
             dmg = (int) (dmg * 0.9);
         }
         hp -= dmg;
@@ -430,13 +430,13 @@ public abstract class Hero implements Serializable {
     }
 
     public void applyPassiveEffects() {
-        if (this instanceof Mage) {
+        if (this instanceof Hacker) {
             mana = Math.min(mana + (int)(maxMana * 0.1), maxMana);
-            System.out.println("Mage regenerates " + (int)(maxMana * 0.1) + " mana.");
+            System.out.println("Hacker regenerates " + (int)(maxMana * 0.1) + " mana.");
         }
     }
 
     public int getDefense() {
-        return equipment.armorBonus + (this instanceof Knight ? 5 : 0);
+        return equipment.armorBonus + (this instanceof Debugger ? 5 : 0);
     }
 }

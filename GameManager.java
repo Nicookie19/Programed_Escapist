@@ -321,18 +321,18 @@ public class GameManager {
         printBorder("divider");
         printCenteredLine("  Oh good, you're awake! Choose your path:  ", Color.YELLOW);
         System.out.println(Color.colorize("|" + " ".repeat(MENU_WIDTH - 2) + "|", Color.WHITE));
-        System.out.println(Color.colorize("| 1. Knight: Nikolaos Ironmark, The Dragonborn             |", Color.BLUE));
-        System.out.println(Color.colorize("|    - High health and defense, wields swords and shields  |", Color.GRAY));
-        System.out.println(Color.colorize("| 2. Mage: Aurelion Thalor, Arch Mage of Winterhold        |", Color.BLUE));
-        System.out.println(Color.colorize("|    - Powerful spells, low defense, uses staves           |", Color.GRAY));
-        System.out.println(Color.colorize("| 3. Archer: Sorin Sandpiercer, Nightingale                |", Color.BLUE));
-        System.out.println(Color.colorize("|    - Agile, high critical hits, uses bows                |", Color.GRAY));
-        System.out.println(Color.colorize("| 4. Rook: Ghorzug Stonefist, Champion of Talos            |", Color.BLUE));
-        System.out.println(Color.colorize("|    - Heavy weapons, strong attacks, slow movement        |", Color.GRAY));
-        System.out.println(Color.colorize("| 5. Assassin: Veyra Shadowblade, Dark Brotherhood         |", Color.BLUE));
-        System.out.println(Color.colorize("|    - Stealthy, high damage, uses daggers                 |", Color.GRAY));
-        System.out.println(Color.colorize("| 6. Cleric: Lysara Dawnbringer, Priestess of Mara         |", Color.BLUE));
-        System.out.println(Color.colorize("|    - Healing and support magic, uses maces               |", Color.GRAY));
+        System.out.println(Color.colorize("| 1. Debugger: Alex Codebreaker, The Bug Squasher           |", Color.BLUE));
+        System.out.println(Color.colorize("|    - High health and defense, specializes in debugging    |", Color.GRAY));
+        System.out.println(Color.colorize("| 2. Hacker: Maya Firewall, The Code Breaker                 |", Color.BLUE));
+        System.out.println(Color.colorize("|    - Powerful code manipulator, specializes in exploits   |", Color.GRAY));
+        System.out.println(Color.colorize("| 3. Tester: Sam Byte, The Bug Hunter                        |", Color.BLUE));
+        System.out.println(Color.colorize("|    - Expert at finding vulnerabilities and bugs           |", Color.GRAY));
+        System.out.println(Color.colorize("| 4. Architect: Linus Kernel, The System Designer            |", Color.BLUE));
+        System.out.println(Color.colorize("|    - Strategic planner with strong defensive abilities     |", Color.GRAY));
+        System.out.println(Color.colorize("| 5. PenTester: Vex Shadowblade, The Silent Intruder         |", Color.BLUE));
+        System.out.println(Color.colorize("|    - Stealthy and deadly, excels at critical exploits      |", Color.GRAY));
+        System.out.println(Color.colorize("| 6. Support: Elara Lightbringer, The System Maintainer       |", Color.BLUE));
+        System.out.println(Color.colorize("|    - Supportive maintainer with powerful buffs and heals  |", Color.GRAY));
         System.out.println(Color.colorize("|" + " ".repeat(MENU_WIDTH - 2) + "|", Color.WHITE));
         printBorder("bottom");
         System.out.print(Color.colorize("Enter your choice (1-6): ", Color.YELLOW));
@@ -340,39 +340,39 @@ public class GameManager {
         String choice = scan.nextLine().trim();
         switch (choice) {
             case "1":
-                player = new Knight();
+                player = new Debugger();
                 break;
             case "2":
-                player = new Mage();
+                player = new Hacker();
                 break;
             case "3":
-                player = new Archer();
+                player = new Tester();
                 break;
             case "4":
-                player = new Rook();
+                player = new Architect();
                 break;
             case "5":
-                player = new Assasin();
+                player = new PenTester();
                 break;
             case "6":
-                player = new Cleric();
+                player = new Support();
                 break;
             default:
-                System.out.println(Color.colorize("Invalid choice. Defaulting to Knight.", Color.RED));
-                player = new Knight();
+                System.out.println(Color.colorize("Invalid choice. Defaulting to Debugger.", Color.RED));
+                player = new Debugger();
         }
         System.out.println(Color.colorize("You are now a " + player.getClassName() + "! The world awaits your legend.", Color.GREEN));
         questManager.addQuest(
-                "Relic Hunt",
-                "Seek a relic in Falkreath Forest.",
-                Arrays.asList("Find relic in Falkreath Forest", "Return to Whiterun"),
+                "Code Hunt",
+                "Seek a code snippet in Central Server Hub.",
+                Arrays.asList("Find code snippet in Central Server Hub", "Return to Central Server Hub"),
                 Map.of("gold", 100, "xp", 50),
                 null
         );
         questManager.addQuest(
-                "Bandit Hunt",
-                "Defeat a bandit in Whiterun Plains.",
-                Arrays.asList("Defeat a Bandit in Whiterun Plains"),
+                "Virus Hunt",
+                "Defeat a virus in Data Stream Valley.",
+                Arrays.asList("Defeat a Virus in Data Stream Valley"),
                 Map.of("gold", 50, "xp", 20),
                 null
         );
@@ -778,7 +778,7 @@ System.out.println("\n" + Color.colorize("You encounter a " + enemy.getDisplayNa
                 System.out.println(Color.colorize("Enemy is stunned or you dodged, so they skip their turn!", Color.GREEN));
                 enemy.stunnedForNextTurn = false;
             } else {
-                if (player instanceof Assasin && ((Assasin) player).smokeBombActive) {
+                if (player instanceof PenTester && ((PenTester) player).smokeBombActive) {
                     combatLog.add("Enemy's attack is weakened by Smoke Bomb!");
                     System.out.println(Color.colorize("Enemy's attack is weakened by Smoke Bomb!", Color.YELLOW));
                     int originalMinDmg = enemy.minDmg;
@@ -813,8 +813,8 @@ System.out.println("\n" + Color.colorize("You encounter a " + enemy.getDisplayNa
         if (player instanceof Archer && random.nextInt(100) < 20) {
             System.out.println(Color.colorize("Archer dodges the enemy’s next attack!", Color.GREEN));
             return true;
-        } else if (player instanceof Assasin && random.nextInt(100) < 10) {
-            System.out.println(Color.colorize("Assassin dodges the enemy’s next attack!", Color.GREEN));
+        } else if (player instanceof PenTester && random.nextInt(100) < 10) {
+            System.out.println(Color.colorize("PenTester dodges the enemy’s next attack!", Color.GREEN));
             return true;
         }
         return false;
@@ -878,9 +878,9 @@ System.out.println("\n" + Color.colorize("You encounter a " + enemy.getDisplayNa
         String color = enemy.getTier() == Enemy.Tier.WEAK ? Color.GRAY
                 : enemy.getTier() == Enemy.Tier.NORMAL ? Color.YELLOW : Color.RED;
         combatLog.add("You defeated the " + Color.colorize(enemy.getDisplayName(), color) + "!");
-        if (enemy.getCurrentName().equals("Bandit")) {
-            questManager.updateQuest("Defeat a Bandit in Whiterun Plains", player);
-            questManager.updateQuest("Clear a bandit camp near Whiterun Plains", player);
+        if (enemy.getCurrentName().equals("Virus")) {
+            questManager.updateQuest("Defeat a Virus in Data Stream Valley", player);
+            questManager.updateQuest("Clear a virus camp near Central Server Hub", player);
         }
     }
 
@@ -1003,9 +1003,11 @@ System.out.println("\n" + Color.colorize("You encounter a " + enemy.getDisplayNa
         if (discovery.contains("relic")) {
             player.addItem("Ancient Relic", 1.0f);
             System.out.println(Color.colorize("You found an Ancient Relic!", Color.YELLOW));
-            questManager.updateQuest("Find relic in Falkreath Forest", player);
+            if (loc.name.equals("Central Server Hub")) {
+                questManager.updateQuest("Find code snippet in Central Server Hub", player);
+            }
             questManager.updateQuest("Find a Lost Relic for " + loc.name, player);
-        } else if (random.nextBoolean()) {
+        }
             String[] loot = {"gold", "potion", "weapon", "armor", "food", "misc"};
             String found = loot[random.nextInt(loot.length)];
 
@@ -1024,22 +1026,22 @@ System.out.println("\n" + Color.colorize("You encounter a " + enemy.getDisplayNa
                 player.addItem(potion, 0.5f);
                 System.out.println(Color.colorize("You found a " + potion + "!", getItemRarity(potion)));
             } else if (found.equals("weapon")) {
-                String[] classWeapons = player instanceof Knight ? new String[]{
+                String[] classWeapons = player instanceof Debugger ? new String[]{
                     "Iron Sword", "Steel Sword", "Mithril Sword", "Elven Sword", "Glass Sword",
                     "Daedric Sword", "Dragonbone Sword", "Dawnbreaker", "Chillrend", "Dragonbane"
                 }
-                        : player instanceof Mage ? new String[]{
+                        : player instanceof Hacker ? new String[]{
                             "Fire Staff", "Ice Wand", "Staff of Fireballs", "Staff of Ice Storms",
                             "Staff of Healing", "Wand of Mana", "Orb of Elements"
                         }
-                        : player instanceof Archer ? new String[]{
+                        : player instanceof Tester ? new String[]{
                             "Hunting Bow", "Longbow", "Composite Bow", "Elven Bow", "Glass Bow",
                             "Daedric Bow", "Dragonbone Bow"
                         }
-                        : player instanceof Rook ? new String[]{
+                        : player instanceof Architect ? new String[]{
                             "Warhammer", "Battleaxe", "Mace", "Flail"
                         }
-                        : player instanceof Assasin ? new String[]{
+                        : player instanceof PenTester ? new String[]{
                             "Iron Dagger", "Steel Dagger", "Mithril Dagger", "Elven Dagger", "Glass Dagger",
                             "Daedric Dagger", "Ebony Dagger"
                         }
@@ -1049,33 +1051,32 @@ System.out.println("\n" + Color.colorize("You encounter a " + enemy.getDisplayNa
                 String weapon = classWeapons[random.nextInt(classWeapons.length)];
                 player.addItem(weapon, 2.0f);
                 System.out.println(Color.colorize("You found a " + weapon + "!", getItemRarity(weapon)));
-            } else if (found.equals("armor")) {
-                String[] classNames = player instanceof Knight ? new String[]{
-                    "Plate Armor", "Dragonbone Armor"
-                } : player instanceof Mage ? new String[]{"Robe of Protection", "Archmage Robes"
-                } : player instanceof Archer ? new String[]{
-                    "Leather Armor", "Elven Armor"
-                } : player instanceof Rook ? new String[]{
-                    "Chainmail", "Dragonscale Armor"
-                } : player instanceof Assasin ? new String[]{
-                    "Cloak of Shadows", "Nightshade Cloak"
-                } : new String[]{"Robe of Protection", "Holy Shroud"};
-                String armor = classNames[random.nextInt(classNames.length)];
-                player.addItem(armor, 3.0f);
-                System.out.println(Color.colorize("You found a " + armor + "!", getItemRarity(armor)));
-            } else if (found.equals("food")) {
-                String[] foods = {
-                    "Apple", "Bread Loaf", "Cheese Wheel", "Roasted Meat", "Vegetable Stew"
-                };
-                String food = foods[random.nextInt(foods.length)];
-                player.addItem(food, 0.4f);
-                System.out.println(Color.colorize("You found a " + food + "!", getItemRarity(food)));
-            } else if (found.equals("misc")) {
+    } else if (found.equals("armor")) {
+        String[] classNames = player instanceof Debugger ? new String[]{
+            "Plate Armor", "Dragonbone Armor"
+        } : player instanceof Hacker ? new String[]{"Robe of Protection", "Archmage Robes"
+        } : player instanceof Tester ? new String[]{
+            "Leather Armor", "Elven Armor"
+        } : player instanceof Architect ? new String[]{
+            "Chainmail", "Dragonscale Armor"
+        } : player instanceof PenTester ? new String[]{
+            "Cloak of Shadows", "Nightshade Cloak"
+        } : new String[]{"Robe of Protection", "Holy Shroud"};
+        String armor = classNames[random.nextInt(classNames.length)];
+        player.addItem(armor, 3.0f);
+        System.out.println(Color.colorize("You found a " + armor + "!", getItemRarity(armor)));
+    } else if (found.equals("food")) {
+        String[] foods = {
+            "Apple", "Bread Loaf", "Cheese Wheel", "Roasted Meat", "Vegetable Stew"
+        };
+        String food = foods[random.nextInt(foods.length)];
+        player.addItem(food, 0.4f);
+        System.out.println(Color.colorize("You found a " + food + "!", getItemRarity(food)));
+    } else if (found.equals("misc")) {
                 String[] misc = {"Torch", "Map of the Realm", "Ancient Coin", "Silver Ring", "Amulet of Talos"};
                 String item = misc[random.nextInt(misc.length)];
                 player.addItem(item, 0.3f);
-                System.out.println(Color.colorize("You found a " + item + "!", getItemRarity(item)));
-            }
+            System.out.println(Color.colorize("You found a " + item + "!", getItemRarity(item)));
         }
     }
 
@@ -1238,7 +1239,7 @@ System.out.println("\n" + Color.colorize("You encounter a " + enemy.getDisplayNa
         printBorder("divider");
         String[] items;
         int[] prices;
-        if (player instanceof Knight) {
+        if (player instanceof Debugger) {
             items = new String[]{
                 "Iron Sword", "Steel Sword", "Mithril Sword", "Elven Sword", "Glass Sword",
                 "Daedric Sword", "Dragonbone Sword", "Dawnbreaker", "Chillrend", "Dragonbane",
@@ -1246,7 +1247,7 @@ System.out.println("\n" + Color.colorize("You encounter a " + enemy.getDisplayNa
                 "Health Potion", "Potion of Ultimate Healing", "Amulet of Talos"
             };
             prices = new int[]{10, 15, 20, 25, 30, 35, 40, 45, 42, 40, 20, 35, 5, 15, 10};
-        } else if (player instanceof Mage) {
+        } else if (player instanceof Hacker) {
             items = new String[]{
                 "Fire Staff", "Ice Wand", "Staff of Fireballs", "Staff of Ice Storm",
                 "Staff of Healing", "Wand of Lightning", "Orb of Elements",
@@ -1254,7 +1255,7 @@ System.out.println("\n" + Color.colorize("You encounter a " + enemy.getDisplayNa
                 "Mana Potion", "Potion of Ultimate Healing", "Amulet of Talos"
             };
             prices = new int[]{15, 20, 25, 30, 35, 40, 45, 15, 25, 7, 15, 10};
-        } else if (player instanceof Archer) {
+        } else if (player instanceof Tester) {
             items = new String[]{
                 "Hunting Bow", "Longbow", "Composite Bow", "Elven Bow", "Glass Bow",
                 "Daedric Bow", "Dragonbone Bow",
@@ -1262,14 +1263,14 @@ System.out.println("\n" + Color.colorize("You encounter a " + enemy.getDisplayNa
                 "Health Potion", "Potion of Ultimate Healing", "Amulet of Talos"
             };
             prices = new int[]{10, 15, 20, 25, 30, 35, 40, 15, 25, 5, 15, 10};
-        } else if (player instanceof Rook) {
+        } else if (player instanceof Architect) {
             items = new String[]{
                 "Warhammer", "Battleaxe", "Mace", "Flail",
                 "Chainmail", "Dragonscale Armor",
                 "Health Potion", "Potion of Ultimate Healing", "Amulet of Talos"
             };
             prices = new int[]{15, 20, 25, 30, 20, 35, 5, 15, 10};
-        } else if (player instanceof Assasin) {
+        } else if (player instanceof PenTester) {
             items = new String[]{
                 "Iron Dagger", "Steel Dagger", "Mithril Dagger", "Elven Dagger", "Glass Dagger",
                 "Daedric Dagger", "Ebony Dagger",
