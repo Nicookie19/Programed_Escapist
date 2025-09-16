@@ -691,7 +691,7 @@ public class GameManager {
         enemy.changeName(loc.enemyPool[random.nextInt(loc.enemyPool.length)]);
         displayEnemyArt(enemy);
         String color = enemy.getTier() == Enemy.Tier.WEAK ? Color.GRAY
-               : enemy.getTier() == Enemy.Tier.NORMAL ? Color.YELLOW : Color.RED;
+            : enemy.getTier() == Enemy.Tier.NORMAL ? Color.YELLOW : Color.RED;
 System.out.println("\n" + Color.colorize("You encounter a " + enemy.getDisplayName() + " in " + loc.name + "!", color));
         encounter(loc);
     }
@@ -759,7 +759,7 @@ System.out.println("\n" + Color.colorize("You encounter a " + enemy.getDisplayNa
                 }
             }
 
-            if (player instanceof Rook && random.nextInt(100) < 15) {
+            if (player instanceof Architect && random.nextInt(100) < 15) {
                 int counterDmg = player.minDmg + random.nextInt(player.maxDmg - player.minDmg + 1);
                 combatLog.add("Rook counterattacks for " + counterDmg + " damage!");
                 System.out.println(Color.colorize("Rook counterattacks for " + counterDmg + " damage!", Color.GREEN));
@@ -810,7 +810,7 @@ System.out.println("\n" + Color.colorize("You encounter a " + enemy.getDisplayNa
     }
 
     private boolean checkDodge(Hero player) {
-        if (player instanceof Archer && random.nextInt(100) < 20) {
+        if (player instanceof Hacker && random.nextInt(100) < 20) {
             System.out.println(Color.colorize("Archer dodges the enemy’s next attack!", Color.GREEN));
             return true;
         } else if (player instanceof PenTester && random.nextInt(100) < 10) {
@@ -840,7 +840,7 @@ System.out.println("\n" + Color.colorize("You encounter a " + enemy.getDisplayNa
         int skillChoice = getChoice(1, player.attackNames.length);
         String skillName = player.attackNames[skillChoice - 1];
 
-        if (player instanceof Mage) {
+        if (player instanceof Support) {
             if (skillName.equals("Fireball")) {
                 int damage = player.minDmg + random.nextInt(player.maxDmg - player.minDmg + 1) + 10;
                 enemy.receiveDamage(damage);

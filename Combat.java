@@ -95,9 +95,9 @@ public class Combat {
         int critChance = 15;
         
         // Bonus crit chance for certain classes
-        if (player instanceof Archer) {
+        if (player instanceof Tester) {
             critChance += 10;
-        } else if (player instanceof Assasin) {
+        } else if (player instanceof PenTester) {
             critChance += 15;
         }
         

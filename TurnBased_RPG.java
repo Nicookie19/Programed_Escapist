@@ -285,8 +285,8 @@ public class TurnBased_RPG {
     public void displayMainMenu() {
         while (true) {
             printBorder("top");
-            printCenteredLine("Relicborne: Odyssey of Nikolaos", Color.PURPLE);
-            printCenteredLine("A Tale of Valor and Ancient Secrets", Color.GRAY);
+            printCenteredLine("Programmed Escapist", Color.PURPLE);
+            printCenteredLine("Help Im Stuck in My Computer", Color.GRAY);
             printBorder("divider");
             printCenteredLine("1. Start New Game", Color.WHITE);
             printCenteredLine("2. Load Game", Color.WHITE);
@@ -349,7 +349,7 @@ public class TurnBased_RPG {
                 player = new PenTester();
                 break;
             case "6":
-                player = new Cleric();
+                player = new Support();
                 break;
             default:
                 System.out.println(Color.colorize("Invalid choice. Defaulting to Debugger.", Color.RED));
