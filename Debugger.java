@@ -7,20 +7,17 @@ import java.util.Random;
 public class Debugger extends Hero {
     private int debugCooldown = 0;
     private int patchCooldown = 0;
-    private int secureCooldown = 0;
-    private boolean secureActive = false;
-    private int secureTurns = 0;
-    private boolean ironResolveTriggered = false;
+    private int inspectCooldown = 0;
 
     public Debugger() {
         super(new Random());
-        this.maxHP = 280;
+        this.maxHP = 250;
         this.hp = this.maxHP;
-        this.minDmg = 20;
-        this.maxDmg = 35;
-        this.maxMana = 60;
-        this.mana = 40;
-        this.attackNames = new String[]{"Debug", "Refactor", "Patch", "Optimize", "Secure"};
+        this.minDmg = 10;
+        this.maxDmg = 20;
+        this.maxMana = 100;
+        this.mana = this.maxMana;
+        this.attackNames = new String[]{"Debug", "Patch", "Inspect", "Breakpoint"};
     }
 
     @Override
@@ -30,40 +27,24 @@ public class Debugger extends Hero {
 
     @Override
     protected List<String> getAllowedWeapons() {
-        return Arrays.asList("Basic Exploit", "Advanced Exploit", "Zero-Day Exploit", "Kernel Exploit", "Buffer Overflow Exploit");
+        return Arrays.asList("Debug Tool", "Patch Kit", "Inspection Lens", "Breakpoint Hammer");
     }
 
     @Override
     protected List<String> getAllowedArmors() {
-        return Arrays.asList("Firewall Vest", "Encryption Cloak");
+        return Arrays.asList("Firewall Vest", "Debug Armor");
     }
 
     @Override
     public void decrementCooldowns() {
         if (debugCooldown > 0) debugCooldown--;
         if (patchCooldown > 0) patchCooldown--;
-        if (secureCooldown > 0) {
-            secureCooldown--;
-            if (secureCooldown == 0) {
-                secureActive = false;
-            }
-        }
-        if (secureActive && secureTurns > 0) {
-            secureTurns--;
-            if (secureTurns == 0) {
-                secureActive = false;
-            }
-        }
+        if (inspectCooldown > 0) inspectCooldown--;
     }
 
     @Override
     public void applyPassiveEffects() {
-        if (hp < maxHP * 0.3 && !ironResolveTriggered) {
-            int tempHP = (int)(maxHP * 0.1);
-            hp = Math.min(hp + tempHP, maxHP);
-            System.out.println("Iron Resolve activates, granting " + tempHP + " temporary HP!");
-            ironResolveTriggered = true;
-        }
+        // High defense passive is handled in Hero.receiveDamage
     }
 
     @Override
@@ -73,8 +54,8 @@ public class Debugger extends Hero {
             case 0: // Debug
                 if (debugCooldown == 0 && mana >= 20) {
                     int baseDamage = minDmg + random.nextInt(maxDmg - minDmg + 1);
-                    int damage = (int)(baseDamage * 2 * multiplier);
-                    System.out.println("You use Debug and deal " + damage + " damage!");
+                    int damage = (int)(baseDamage * 1.5 * multiplier);
+                    System.out.println("You debug the code and deal " + damage + " damage!");
                     enemy.receiveDamage(damage);
                     mana -= 20;
                     debugCooldown = 4;
@@ -83,44 +64,41 @@ public class Debugger extends Hero {
                     super.useSkill(1, enemy);
                 }
                 break;
-            case 1: // Refactor
-                super.useSkill(1, enemy);
-                break;
-            case 2: // Patch
-                if (patchCooldown == 0 && mana >= 15) {
-                    int baseDamage = minDmg + random.nextInt(10);
-                    int damage = (int)(baseDamage * multiplier);
-                    System.out.println("You use Patch and deal " + damage + " damage, stunning the enemy!");
-                    enemy.receiveDamage(damage);
-                    enemy.stunnedForNextTurn = true;
-                    mana -= 15;
-                    patchCooldown = 3;
+            case 1: // Patch
+                if (patchCooldown == 0 && mana >= 25) {
+                    int heal = (int)(maxHP * 0.2);
+                    hp = Math.min(hp + heal, maxHP);
+                    System.out.println("You apply a patch and heal " + heal + " HP!");
+                    mana -= 25;
+                    patchCooldown = 5;
                 } else {
                     System.out.println("Patch is on cooldown or insufficient mana! Using normal attack.");
                     super.useSkill(1, enemy);
                 }
                 break;
-            case 3: // Optimize
-                if (mana >= 20) {
+            case 2: // Inspect
+                if (inspectCooldown == 0 && mana >= 15) {
                     int baseDamage = minDmg + random.nextInt(maxDmg - minDmg + 1);
-                    int damage = (int)(baseDamage * 2.5 * multiplier);
-                    System.out.println("You use Optimize and deal " + damage + " damage!");
+                    int damage = (int)(baseDamage * multiplier);
+                    System.out.println("You inspect and deal " + damage + " damage, revealing enemy weaknesses!");
                     enemy.receiveDamage(damage);
-                    mana -= 20;
+                    mana -= 15;
+                    inspectCooldown = 3;
                 } else {
-                    System.out.println("Insufficient mana for Optimize! Using normal attack.");
+                    System.out.println("Inspect is on cooldown or insufficient mana! Using normal attack.");
                     super.useSkill(1, enemy);
                 }
                 break;
-            case 4: // Secure
-                if (secureCooldown == 0 && mana >= 15) {
-                    System.out.println("You enter Secure, reducing damage taken by 30% for 2 turns!");
-                    secureActive = true;
-                    secureTurns = 2;
-                    mana -= 15;
-                    secureCooldown = 4;
+            case 3: // Breakpoint
+                if (mana >= 30) {
+                    int baseDamage = minDmg + random.nextInt(maxDmg - minDmg + 1);
+                    int damage = (int)(baseDamage * 2 * multiplier);
+                    System.out.println("You set a breakpoint and deal " + damage + " damage, stunning the enemy!");
+                    enemy.receiveDamage(damage);
+                    enemy.stunnedForNextTurn = true;
+                    mana -= 30;
                 } else {
-                    System.out.println("Secure is on cooldown or insufficient mana! Using normal attack.");
+                    System.out.println("Insufficient mana for Breakpoint! Using normal attack.");
                     super.useSkill(1, enemy);
                 }
                 break;
@@ -128,14 +106,5 @@ public class Debugger extends Hero {
                 super.useSkill(1, enemy);
                 break;
         }
-    }
-
-    @Override
-    public void receiveDamage(int dmg) {
-        if (secureActive && secureTurns > 0) {
-            dmg = (int)(dmg * 0.7);
-            System.out.println("Secure reduces damage by 30%!");
-        }
-        super.receiveDamage(dmg);
     }
 }

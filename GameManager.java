@@ -292,8 +292,8 @@ public class GameManager {
     public void displayMainMenu() {
         while (true) {
             printBorder("top");
-            printCenteredLine("Relicborne: Odyssey of Nikolaos", Color.PURPLE);
-            printCenteredLine("A Tale of Valor and Ancient Secrets", Color.GRAY);
+            printCenteredLine("Codeborne: Odyssey of the Programmer", Color.PURPLE);
+            printCenteredLine("A Tale of Code and Digital Adventures", Color.GRAY);
             printBorder("divider");
             printCenteredLine("1. Start New Game", Color.WHITE);
             printCenteredLine("2. Load Game", Color.WHITE);

@@ -7,8 +7,6 @@ import java.util.Random;
 public class Architect extends Hero {
     private int designCooldown = 0;
     private int rallyCooldown = 0;
-    private int fortifyCooldown = 0;
-    private boolean fortifyActive = false;
     private boolean unyieldingSpiritTriggered = false;
 
     public Architect() {
@@ -19,7 +17,7 @@ public class Architect extends Hero {
         this.maxDmg = 40;
         this.maxMana = 50;
         this.mana = this.maxMana;
-        this.attackNames = new String[]{"Design", "Build", "Rally", "Demolish", "Fortify"};
+        this.attackNames = new String[]{"Design", "Build", "Rally", "Demolish"};
     }
 
     @Override
@@ -41,12 +39,6 @@ public class Architect extends Hero {
     public void decrementCooldowns() {
         if (designCooldown > 0) designCooldown--;
         if (rallyCooldown > 0) rallyCooldown--;
-        if (fortifyCooldown > 0) {
-            fortifyCooldown--;
-            if (fortifyCooldown == 0) {
-                fortifyActive = false;
-            }
-        }
     }
 
     @Override
@@ -102,17 +94,6 @@ public class Architect extends Hero {
                     super.useSkill(1, enemy);
                 }
                 break;
-            case 4: // Fortify
-                if (fortifyCooldown == 0 && mana >= 25) {
-                    System.out.println("You fortify your position, absorbing all damage for one turn!");
-                    fortifyActive = true;
-                    mana -= 25;
-                    fortifyCooldown = 5;
-                } else {
-                    System.out.println("Fortify is on cooldown or insufficient mana! Using normal attack.");
-                    super.useSkill(1, enemy);
-                }
-                break;
             default:
                 super.useSkill(1, enemy);
                 break;
@@ -121,11 +102,6 @@ public class Architect extends Hero {
 
     @Override
     public void receiveDamage(int dmg) {
-        if (fortifyActive) {
-            System.out.println("Fortify absorbs all damage!");
-            fortifyActive = false;
-            return;
-        }
         if (!unyieldingSpiritTriggered && hp - dmg <= 0) {
             hp = 1;
             unyieldingSpiritTriggered = true;

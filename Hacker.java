@@ -17,7 +17,7 @@ public class Hacker extends Hero {
         this.maxDmg = 25;
         this.maxMana = 120;
         this.mana = 120;
-        this.attackNames = new String[]{"Exploit", "Inject", "DDoS", "Firewall", "Rootkit"};
+        this.attackNames = new String[]{"Exploit", "Inject", "DDoS", "Rootkit"};
     }
 
     @Override
@@ -90,18 +90,7 @@ public class Hacker extends Hero {
                     super.useSkill(1, enemy);
                 }
                 break;
-            case 3: // Firewall
-                if (mana >= 30) {
-                    int heal = (int)(maxHP * 0.3 * multiplier);
-                    hp = Math.min(hp + heal, maxHP);
-                    System.out.println("You activate Firewall and restore " + heal + " HP!");
-                    mana -= 30;
-                } else {
-                    System.out.println("Insufficient mana for Firewall! Using normal attack.");
-                    super.useSkill(1, enemy);
-                }
-                break;
-            case 4: // Rootkit
+            case 3: // Rootkit
                 if (rootkitCooldown == 0 && mana >= 30) {
                     int baseDamage = minDmg + random.nextInt(maxDmg - minDmg + 1);
                     int damage = (int)(baseDamage * 2.5 * multiplier);

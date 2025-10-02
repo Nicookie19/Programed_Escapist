@@ -20,7 +20,7 @@ public class Tester extends Hero {
         this.maxDmg = 35;
         this.maxMana = 80;
         this.mana = this.maxMana;
-        this.attackNames = new String[]{"Scan", "Verify", "Bug Report", "Regression", "Penetration"};
+        this.attackNames = new String[]{"Scan", "Verify", "Bug Report", "Regression"};
     }
 
     @Override
@@ -42,7 +42,6 @@ public class Tester extends Hero {
     public void decrementCooldowns() {
         if (scanCooldown > 0) scanCooldown--;
         if (verifyCooldown > 0) verifyCooldown--;
-        if (penetrationCooldown > 0) penetrationCooldown--;
         if (bugTurnsRemaining > 0) {
             bugTurnsRemaining--;
             if (bugTurnsRemaining == 0) {

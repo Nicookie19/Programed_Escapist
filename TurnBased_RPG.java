@@ -82,11 +82,11 @@ public class TurnBased_RPG {
 
     private void initializeFactions() {
         availableFactions = new ArrayList<>();
-        availableFactions.add(new Faction("Companions"));
-        availableFactions.add(new Faction("Thieves Guild"));
-        availableFactions.add(new Faction("Dark Brotherhood"));
-        availableFactions.add(new Faction("College of Winterhold"));
-        availableFactions.add(new Faction("Imperial Legion"));
+        availableFactions.add(new Faction("Hackers Alliance"));
+        availableFactions.add(new Faction("Cyber Thieves"));
+        availableFactions.add(new Faction("Shadow Coders"));
+        availableFactions.add(new Faction("Tech University"));
+        availableFactions.add(new Faction("Firewall Guardians"));
     }
 
     private void initializeWorld() {
@@ -357,16 +357,16 @@ public class TurnBased_RPG {
         }
         System.out.println(Color.colorize("You are now a " + player.getClassName() + "! The world awaits your legend.", Color.GREEN));
         questManager.addQuest(
-                "Relic Hunt",
-                "Seek a relic in Falkreath Forest.",
-                Arrays.asList("Find relic in Falkreath Forest", "Return to Whiterun"),
+                "Bug Hunt",
+                "Seek a relic in Desktop.",
+                Arrays.asList("Find relic in Desktop", "Return to RAM Bank"),
                 Map.of("gold", 100, "xp", 50),
                 null
         );
         questManager.addQuest(
-                "Bandit Hunt",
-                "Defeat a bandit in Whiterun Plains.",
-                Arrays.asList("Defeat a Bandit in Whiterun Plains"),
+                "Malware Hunt",
+                "Defeat a virus in RAM Bank.",
+                Arrays.asList("Defeat a Virus in RAM Bank"),
                 Map.of("gold", 50, "xp", 20),
                 null
         );
@@ -520,7 +520,7 @@ public class TurnBased_RPG {
             for (Faction faction : availableFactions) {
                 if (!player.isInFaction(faction.getName())) {
                     if (factionIdx == choice - 1) {
-                    player.joinFaction(faction);
+                        player.joinFaction(faction);
                         System.out.println(Color.colorize("You have joined the " + faction.getName() + "!", Color.GREEN));
                         return;
                     }
@@ -582,15 +582,15 @@ public class TurnBased_RPG {
 
     private String getFactionQuestName(String factionName) {
         switch (factionName) {
-            case "Companions":
-                return "Clear Bandit Camp";
-            case "Thieves Guild":
-                return "Steal Noble Artifact";
-            case "Dark Brotherhood":
-                return "Assassinate Merchant";
-            case "College of Winterhold":
+            case "Hackers Alliance":
+                return "Clear Virus Camp";
+            case "Cyber Thieves":
+                return "Steal Valuable Artifact";
+            case "Shadow Coders":
+                return "Assassinate Corrupt Merchant";
+            case "Tech University":
                 return "Retrieve Ancient Tome";
-            case "Imperial Legion":
+            case "Firewall Guardians":
                 return "Defend Supply Caravan";
             default:
                 return "No Quest";
@@ -599,21 +599,20 @@ public class TurnBased_RPG {
 
     private String getFactionQuestObjective(String factionName) {
         switch (factionName) {
-            case "Companions":
-                return "Clear a bandit camp near Whiterun Plains";
-            case "Thieves Guild":
-                return "Steal a valuable artifact in Riften Woods";
-            case "Dark Brotherhood":
-                return "Assassinate a corrupt merchant in Solitude Cliffs";
-            case "College of Winterhold":
-                return "Retrieve an ancient tome in Winterhold Tundra";
-            case "Imperial Legion":
-                return "Defend a supply caravan near Solitude Cliffs";
+            case "Hackers Alliance":
+                return "Clear a virus camp near RAM Bank";
+            case "Cyber Thieves":
+                return "Steal a valuable artifact in Network Interface";
+            case "Shadow Coders":
+                return "Assassinate a corrupt merchant in System32 Directory";
+            case "Tech University":
+                return "Retrieve an ancient tome in BIOS Firmware";
+            case "Firewall Guardians":
+                return "Defend a supply caravan near Network Interface";
             default:
                 return "No quest available";
         }
     }
-
     private int getChoice(int min, int max) {
         while (true) {
             try {
@@ -767,9 +766,9 @@ System.out.println("\n" + Color.colorize("You encounter a " + enemy.getDisplayNa
         String color = enemy.getTier() == Enemy.Tier.WEAK ? Color.GRAY
                 : enemy.getTier() == Enemy.Tier.NORMAL ? Color.YELLOW : Color.RED;
         combatLog.add("You defeated the " + Color.colorize(enemy.getDisplayName(), color) + "!");
-        if (enemy.getCurrentName().equals("Bandit")) {
-            questManager.updateQuest("Defeat a Bandit in Whiterun Plains", player);
-            questManager.updateQuest("Clear a bandit camp near Whiterun Plains", player);
+        if (enemy.getCurrentName().equals("Virus")) {
+            questManager.updateQuest("Defeat a Virus in RAM Bank", player);
+            questManager.updateQuest("Clear a virus camp near RAM Bank", player);
         }
     }
 
@@ -866,7 +865,7 @@ System.out.println("\n" + Color.colorize("You encounter a " + enemy.getDisplayNa
         if (discovery.contains("relic")) {
             player.addItem("Ancient Relic", 1.0f);
             System.out.println(Color.colorize("You found an Ancient Relic!", Color.YELLOW));
-            questManager.updateQuest("Find relic in Falkreath Forest", player);
+            questManager.updateQuest("Find relic in Desktop", player);
             questManager.updateQuest("Find a Lost Relic for " + loc.name, player);
         } else if (random.nextBoolean()) {
             String[] loot = {"gold", "potion", "weapon", "armor", "food", "misc"};
@@ -1228,8 +1227,8 @@ System.out.println("\n" + Color.colorize("You encounter a " + enemy.getDisplayNa
                     null
             );
         }
-        if (loc.name.equals("Whiterun Plains")) {
-            questManager.updateQuest("Return to Whiterun", player);
+        if (loc.name.equals("RAM Bank")) {
+            questManager.updateQuest("Return to RAM Bank", player);
         }
     }
 

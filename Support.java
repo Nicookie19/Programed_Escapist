@@ -10,7 +10,6 @@ import java.util.Set;
 public class Support extends Hero {
     private int patchCooldown = 0;
     private int bufferCooldown = 0;
-    private int blessCooldown = 0;
     private boolean bufferActive = false;
 
     public Support() {
@@ -21,7 +20,7 @@ public class Support extends Hero {
         this.maxDmg = 30;
         this.maxMana = 100;
         this.mana = this.maxMana;
-        this.attackNames = new String[]{"Patch", "Heal", "Buffer", "Restore", "Bless"};
+        this.attackNames = new String[]{"Patch", "Heal", "Buffer", "Restore"};
     }
 
     @Override
@@ -48,7 +47,6 @@ public class Support extends Hero {
                 bufferActive = false;
             }
         }
-        if (blessCooldown > 0) blessCooldown--;
     }
 
     @Override
@@ -62,8 +60,8 @@ public class Support extends Hero {
 
     private void triggerCodeGrace() {
         if (random.nextInt(100) < 20) {
-            String[] abilities = {"Patch", "Buffer", "Bless"};
-            int[] cooldowns = {patchCooldown, bufferCooldown, blessCooldown};
+            String[] abilities = {"Patch", "Buffer"};
+            int[] cooldowns = {patchCooldown, bufferCooldown};
             List<Integer> activeCooldowns = new ArrayList<>();
             for (int i = 0; i < cooldowns.length; i++) {
                 if (cooldowns[i] > 0) {
@@ -74,7 +72,6 @@ public class Support extends Hero {
                 int idx = activeCooldowns.get(random.nextInt(activeCooldowns.size()));
                 if (idx == 0) patchCooldown = 0;
                 else if (idx == 1) bufferCooldown = 0;
-                else if (idx == 2) blessCooldown = 0;
                 System.out.println("Code Grace resets the cooldown of " + abilities[idx] + "!");
             }
         }
@@ -120,25 +117,6 @@ public class Support extends Hero {
                     triggerCodeGrace();
                 } else {
                     System.out.println("Insufficient mana for Restore! Using normal attack.");
-                    super.useSkill(1, enemy);
-                }
-                break;
-            case 4: // Bless
-                if (blessCooldown == 0 && mana >= 20) {
-                    int heal = (int)(maxHP * 0.25 * multiplier);
-                    hp = Math.min(hp + heal, maxHP);
-                    System.out.println("You cast Bless and restore " + heal + " HP!");
-                    Set<String> virusEnemies = new HashSet<>(Arrays.asList("Virus", "Trojan", "Malware", "Worm", "Ransomware"));
-                    if (virusEnemies.contains(enemy.getCurrentName())) {
-                        int damage = (int)(minDmg * 1.2 * multiplier);
-                        System.out.println("Bless deals " + damage + " damage to the virus " + enemy.getCurrentName() + "!");
-                        enemy.receiveDamage(damage);
-                    }
-                    mana -= 20;
-                    blessCooldown = 4;
-                    triggerCodeGrace();
-                } else {
-                    System.out.println("Bless is on cooldown or insufficient mana! Using normal attack.");
                     super.useSkill(1, enemy);
                 }
                 break;
